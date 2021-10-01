@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
+    "start": "node ./bin/www",
     "prettier": "prettier --check .",
+    "dev": "nodemon ./bin/www",
+    "debug": "node --inspect-brk ./bin/www",
     "prettier:fix": "prettier --write .",
     "lint": "eslint --quiet",
     "lint:fix": "yarn lint --fix",
