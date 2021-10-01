@@ -10,6 +10,15 @@ const emailValidate = (email) => {
 }
 
 /**
+ * @param {string} user_name
+ * @returns {boolean}
+ */
+const usernameValidate = (username) => {
+  const re = /^[a-zA-Z0-9]{4,16}$/
+  return re.test(username)
+}
+
+/**
  *
  * @param {string} password
  * @description takes unhashed password and checks if it has 8-16 characters ,uppercase,symbol lowercase
@@ -23,5 +32,6 @@ const passwordValidate = (password) => {
 
 module.exports = {
   emailValidate,
-  passwordValidate
+  passwordValidate,
+  usernameValidate
 }

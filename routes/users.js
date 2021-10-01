@@ -4,8 +4,8 @@ var router = express.Router()
 const db = require('../db/mongo')
 const userSchema = require('../model/user_model')
 const { initialValidation } = require('../middleware/initialValidation')
-const { userRegister } = require('../controllers/userRegister')
-const { userLogin } = require('../controllers/userLogin')
+const { userRegister } = require('../middleware/userRegister')
+const { userLogin } = require('../middleware/userLogin')
 
 // /* GET users listing. */
 // router.get('/', function (req, res, next) {

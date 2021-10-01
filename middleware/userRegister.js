@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const generateAccessToken = require('../middleware/generateToken')
+const generateAccessToken = require('./generateToken')
 const db = require('../db/mongo')
 const userSchema = require('../model/user_model')
 const User = db.model('User', userSchema)
@@ -14,15 +14,19 @@ const { nanoid } = require('nanoid')
  * @description registers a user in mongoDB and returns a jwt token
  */
 exports.userRegister = async (req, res, next) => {
-  const { email, userName, password } = req.body
+  const { email, user_name, password } = req.body
   try {
+    const usernameExists = await User.findOne({ user_name })
+    if (usernameExists) {
+      throw new Error('User with that username already exists')
+    }
     const alreadyExists = await User.exists({ email: email.toLowerCase() })
-    if (alreadyExists) return res.status(401).send('Email already exists')
+    if (alreadyExists) throw new Error('user with that email already exists')
 
     const hash = bcrypt.hashSync(password, salt)
     const newUser = new User({
       email: email.toLowerCase(),
-      userName,
+      user_name: user_name.toLowerCase(),
       password: hash,
       referrer: nanoid(6)
     })
@@ -30,6 +34,7 @@ exports.userRegister = async (req, res, next) => {
     const token = generateAccessToken(newUser)
     return res.status(201).json({ auth_token: token })
   } catch (err) {
+    if (err) return res.status(400).json({ success: false, message: err.message })
     console.error(err)
     return res.status(500).send('Something unexpected occurred')
   }
