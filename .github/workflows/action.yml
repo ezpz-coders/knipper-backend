@@ -18,5 +18,4 @@ jobs:
         run: yarn install
       - name: Verify linting
         run: yarn lint
-      - name: Build
-        run: yarn build
+ 
