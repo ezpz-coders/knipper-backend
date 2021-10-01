@@ -1,8 +1,15 @@
-const jwt = require('jsonwebtoken');
-const  { JWT_SECRET } = require('../config')
+const jwt = require('jsonwebtoken')
+const { JWT_SECRET } = require('../config')
 
-function generateAccessToken(username) {
-    return jwt.sign(username, JWT_SECRET, { expiresIn: '1800s' });
+/**
+ * 
+ * @param {Object} User Details about user fetched from database or created using mongoose
+ * @returns jwt token in string format
+ */
+function generateAccessToken(User) {
+  const JWT_VALIDITY = 1 * 24 * 60 * 60 * 1000
+  const expireAt = Date.now() + JWT_VALIDITY
+  return jwt.sign({ userId: User._id, expireAt }, JWT_SECRET)
 }
 
-module.exports = generateAccessToken;
+module.exports = generateAccessToken
