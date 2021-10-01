@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const generateAccessToken = require('../middleware/generateToken')
+const generateAccessToken = require('./generateToken')
 const db = require('../db/mongo')
 const userSchema = require('../model/user_model')
 
@@ -14,14 +14,13 @@ const User = db.model('User', userSchema)
  *
  */
 exports.userLogin = async (req, res, next) => {
-  const { email, password } = req.body
+  const { loginDetails, password } = req.body
   try {
-    const user = await User.findOne({ email: email.toLowerCase() })
-    console.log(user)
-    if (!user) throw new Error(`User doesn't exist`)
-    const isPasswordCorrect = bcrypt.compareSync(password, user.password)
+    const user = await User.find({$or:[{user_name: loginDetails.toLowerCase()}, {email: loginDetails.toLowerCase()}]});
+    if (!user[0]) throw new Error(`User doesn't exist`)
+    const isPasswordCorrect = bcrypt.compareSync(password, user[0].password)
     if (isPasswordCorrect) {
-      const token = generateAccessToken(user)
+      const token = generateAccessToken(user[0])
       return res.status(200).send({ success: true, auth_token: token })
     } else {
       throw new Error('Incorrect Password')
