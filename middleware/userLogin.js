@@ -15,8 +15,8 @@ const User = db.model('User', userSchema);
  *
  */
 exports.userLogin = async (req, res) => {
-  const { loginDetails, password } = req.body;
   try {
+    const { loginDetails, password } = req.body;
     if (!loginDetails || !password) throw new CustomError(402, 'Bad Request');
     const user = await User.find({
       $or: [
