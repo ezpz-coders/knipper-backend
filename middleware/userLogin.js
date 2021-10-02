@@ -16,7 +16,12 @@ const User = db.model('User', userSchema)
 exports.userLogin = async (req, res, next) => {
   const { loginDetails, password } = req.body
   try {
-    const user = await User.find({$or:[{user_name: loginDetails.toLowerCase()}, {email: loginDetails.toLowerCase()}]});
+    const user = await User.find({
+      $or: [
+        { user_name: loginDetails.toLowerCase() },
+        { email: loginDetails.toLowerCase() }
+      ]
+    })
     if (!user[0]) throw new Error(`User doesn't exist`)
     const isPasswordCorrect = bcrypt.compareSync(password, user[0].password)
     if (isPasswordCorrect) {

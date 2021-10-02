@@ -18,16 +18,15 @@ router.post('/signup', initialValidation, userRegister)
 router.post('/signin', userLogin)
 
 router.get('/me', authenticateToken, (req, res) => {
-  res.status(200).json({success:true,message:"Access Granted"})
+  res.status(200).json({ success: true, message: 'Access Granted' })
 })
 
 router.post('/me/add-snippet', (req, res, next) => {
-  const body = req.body;
-  userModel.create(body, (err, data)=>{
-    console.log("added");
+  const body = req.body
+  userModel.create(body, (err, data) => {
+    console.log('added')
   })
   res.status(201).json(body)
-
 })
 
 module.exports = router

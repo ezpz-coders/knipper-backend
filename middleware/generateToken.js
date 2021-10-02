@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = require('../config')
 
 /**
- * 
+ *
  * @param {Object} User Details about user fetched from database or created using mongoose
  * @returns jwt token in string format
  */

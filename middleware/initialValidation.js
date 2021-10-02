@@ -1,4 +1,8 @@
-const { emailValidate, passwordValidate, usernameValidate } = require('../utils/validation')
+const {
+  emailValidate,
+  passwordValidate,
+  usernameValidate
+} = require('../utils/validation')
 /**
  *
  * @param {import('express').Request} req

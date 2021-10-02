@@ -34,7 +34,8 @@ exports.userRegister = async (req, res, next) => {
     const token = generateAccessToken(newUser)
     return res.status(201).json({ auth_token: token })
   } catch (err) {
-    if (err) return res.status(400).json({ success: false, message: err.message })
+    if (err)
+      return res.status(400).json({ success: false, message: err.message })
     console.error(err)
     return res.status(500).send('Something unexpected occurred')
   }
