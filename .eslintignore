@@ -1,5 +1,2 @@
-*/**.js
-*/**.d.ts
-dist
 node_modules
-.next
+__tests__

@@ -1,4 +1,8 @@
-const { emailValidate, passwordValidate, usernameValidate } = require('../utils/validation')
+const {
+  emailValidate,
+  passwordValidate,
+  usernameValidate,
+} = require('../utils/validation');
 /**
  *
  * @param {import('express').Request} req
@@ -7,7 +11,7 @@ const { emailValidate, passwordValidate, usernameValidate } = require('../utils/
  * @returns response if failed otherwise goes on to next middleware
  */
 exports.initialValidation = (req, res, next) => {
-  const { email, password, confirmPassword, user_name } = req.body
+  const { email, password, confirmPassword, user_name } = req.body;
   if (
     typeof email === 'string' &&
     typeof user_name === 'string' &&
@@ -20,6 +24,6 @@ exports.initialValidation = (req, res, next) => {
     passwordValidate(password) &&
     usernameValidate(user_name)
   ) {
-    next()
-  } else res.status(401).send('Initial checks fail')
-}
+    next();
+  } else res.status(401).send('Initial checks fail');
+};
