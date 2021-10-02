@@ -14,7 +14,7 @@ describe("test connection", () => {
         mongoose.connection.close()
         done()
     })
-    
+
     it('connection should be defined', async () => {
         expect(conn).toBeDefined();
     })
