@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "prettier": "prettier --check .",
+    "test": "jest",
     "dev": "nodemon ./bin/www",
     "debug": "node --inspect ./bin/www",
     "prettier:fix": "prettier --write .",
