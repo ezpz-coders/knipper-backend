@@ -12,13 +12,22 @@ const { userLogin } = require('../middleware/userLogin')
 //   res.send('respond with a resource');
 // });
 
-var userModel = db.model('userModel', userSchema)
+var userModel = db.model('user', userSchema)
 
-router.post('/api/signup', initialValidation, userRegister)
-router.post('/api/signin', userLogin)
+router.post('/signup', initialValidation, userRegister)
+router.post('/signin', userLogin)
 
-router.get('/api/me', authenticateToken, (req, res) => {
+router.get('/me', authenticateToken, (req, res) => {
   res.status(200).json({success:true,message:"Access Granted"})
+})
+
+router.post('/me/add-snippet', (req, res, next) => {
+  const body = req.body;
+  userModel.create(body, (err, data)=>{
+    console.log("added");
+  })
+  res.status(201).json(body)
+
 })
 
 module.exports = router

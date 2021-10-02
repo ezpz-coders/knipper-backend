@@ -1,13 +1,15 @@
 //Require Mongoose
 var mongoose = require('mongoose');
+var folderSchema = require("./folder_model")
 
 //Define a schema
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
   user_name: String,
-  email: {type: String, required: true},
-  password: {type: String, required: true}
+  email: String,
+  password: String,
+  folders: [folderSchema]
 });
 
 module.exports = userSchema;

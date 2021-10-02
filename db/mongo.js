@@ -3,8 +3,15 @@ var mongoose = require('mongoose');
 const { MONGO_URI } = require('../config')
 
 //Set up default mongoose connection
+console.log(process.env.NODE_ENV);
 var mongoDB = MONGO_URI;
-mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+if (process.env.NODE_ENV === "development") {
+    mongoose.connect("mongodb://localhost:27017/knipper", {useNewUrlParser: true, useUnifiedTopology: true});
+  }
+if (process.env.NODE_ENV === "production") {
+    mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+}
+
 
 //Get the default connection
 var db = mongoose.connection;
