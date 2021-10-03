@@ -5,18 +5,18 @@
  */
 const emailValidate = (email) => {
   const re =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  return re.test(String(email).toLowerCase())
-}
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+};
 
 /**
  * @param {string} user_name
  * @returns {boolean}
  */
 const usernameValidate = (username) => {
-  const re = /^[a-zA-Z0-9]{4,16}$/
-  return re.test(username)
-}
+  const re = /^[a-zA-Z0-9]{4,16}$/;
+  return re.test(username);
+};
 
 /**
  *
@@ -26,12 +26,12 @@ const usernameValidate = (username) => {
  */
 const passwordValidate = (password) => {
   const re =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/
-  return re.test(password)
-}
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+  return re.test(password);
+};
 
 module.exports = {
   emailValidate,
   passwordValidate,
-  usernameValidate
-}
+  usernameValidate,
+};

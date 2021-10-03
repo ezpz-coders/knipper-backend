@@ -1,9 +1,10 @@
-const bcrypt = require('bcryptjs')
-const generateAccessToken = require('./generateToken')
-const db = require('../db/mongo')
-const userSchema = require('../model/user_model')
+const bcrypt = require('bcryptjs');
+const generateAccessToken = require('./generateToken');
+const db = require('../db/mongo');
+const userSchema = require('../model/user_model');
+const CustomError = require('../utils/CustomError');
 
-const User = db.model('User', userSchema)
+const User = db.model('User', userSchema);
 
 /**
  *
@@ -13,21 +14,29 @@ const User = db.model('User', userSchema)
  * @description returns token on success
  *
  */
-exports.userLogin = async (req, res, next) => {
-  const { loginDetails, password } = req.body
+exports.userLogin = async (req, res) => {
   try {
-    const user = await User.find({$or:[{user_name: loginDetails.toLowerCase()}, {email: loginDetails.toLowerCase()}]});
-    if (!user[0]) throw new Error(`User doesn't exist`)
-    const isPasswordCorrect = bcrypt.compareSync(password, user[0].password)
+    const { loginDetails, password } = req.body;
+    if (!loginDetails || !password) throw new CustomError(402, 'Bad Request');
+    const user = await User.find({
+      $or: [
+        { user_name: loginDetails.toLowerCase() },
+        { email: loginDetails.toLowerCase() },
+      ],
+    });
+    if (!user[0]) throw new CustomError(402, 'Invalid Login Credentials');
+    const isPasswordCorrect = bcrypt.compareSync(password, user[0].password);
     if (isPasswordCorrect) {
-      const token = generateAccessToken(user[0])
-      return res.status(200).send({ success: true, auth_token: token })
-    } else {
-      throw new Error('Incorrect Password')
+      const token = generateAccessToken(user[0]);
+      return res.status(200).json({ success: true, auth_token: token });
     }
+    throw new CustomError(402, 'Invalid Login Credentials');
   } catch (err) {
     if (err) {
-      return res.status(401).json({ success: false, message: err.message })
-    } else return res.status(500).send('Internal Server error')
+      return res
+        .status(err.httpStatusCode)
+        .json({ success: false, message: err.message });
+    }
+    return res.status(500).send('Internal Server error');
   }
-}
+};

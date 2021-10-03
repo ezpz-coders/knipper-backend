@@ -14,8 +14,12 @@ jobs:
           node-version: '14'
           check-latest: true
           cache: 'yarn'
+
+      - name: MongoDB in GitHub Actions
+        uses: supercharge/mongodb-github-action@1.6.0
       - name: Install dependencies
         run: yarn install
       - name: Verify linting
         run: yarn lint
- 
+      - name: Run Tests
+        run: yarn test

@@ -1,13 +1,13 @@
 //Require Mongoose
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 //Define a schema
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var snippetSchema = new Schema({
-    title: {type: String, required: true},
-    description: {type: String, required: true},
-    playground: String
+const snippetSchema = new Schema({
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  playground: String,
 });
 
 module.exports = snippetSchema;
