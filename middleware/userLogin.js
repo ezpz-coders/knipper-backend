@@ -14,18 +14,13 @@ const User = db.model('User', userSchema);
  * @description returns token on success
  *
  */
-exports.userLogin = async (req, res) => {
+exports.userLogin = async (req, res, next) => {
+  const { user_name, email, password } = req.body
+  const user_detail = user_name || email
   try {
-    const { loginDetails, password } = req.body;
-    if (!loginDetails || !password) throw new CustomError(402, 'Bad Request');
-    const user = await User.find({
-      $or: [
-        { user_name: loginDetails.toLowerCase() },
-        { email: loginDetails.toLowerCase() },
-      ],
-    });
-    if (!user[0]) throw new CustomError(402, 'Invalid Login Credentials');
-    const isPasswordCorrect = bcrypt.compareSync(password, user[0].password);
+    const user = await User.find({$or:[{user_name: user_detail.toLowerCase()}, {email: user_detail.toLowerCase()}]});
+    if (!user[0]) throw new Error(`User doesn't exist`)
+    const isPasswordCorrect = bcrypt.compareSync(password, user[0].password)
     if (isPasswordCorrect) {
       const token = generateAccessToken(user[0]);
       return res.status(200).json({ success: true, auth_token: token });
