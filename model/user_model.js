@@ -9,7 +9,8 @@ const userSchema = new Schema({
   user_name: String,
   email: String,
   password: String,
-  folders: [folderSchema],
+  user_type: {type: String, enum:["user", "admin"], default: "user"},
+  folders: [folderSchema]
 });
 
 module.exports = userSchema;

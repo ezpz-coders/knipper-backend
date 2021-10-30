@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const { MONGO_URI, NODE_ENV } = require('../config');
 
 //Set up default mongoose connection
-console.log(process.env.NODE_ENV);
 
 if (NODE_ENV === 'development') {
   mongoose.connect('mongodb://localhost:27017/knipper', {
@@ -11,7 +10,7 @@ if (NODE_ENV === 'development') {
     useUnifiedTopology: true,
   });
 }
-if (NODE_ENV === 'production' || MONGO_URI) {
+else if (NODE_ENV === 'production' || MONGO_URI) {
   mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
