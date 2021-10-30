@@ -14,7 +14,7 @@ const User = db.model('User', userSchema);
  * @description returns token on success
  *
  */
-exports.userLogin = async (req, res, next) => {
+exports.userLogin = async (req, res) => {
   const { user_name, email, password } = req.body;
   const user_detail = user_name || email;
   try {
