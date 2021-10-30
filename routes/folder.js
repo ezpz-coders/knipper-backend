@@ -11,6 +11,7 @@ const { userLogin } = require('../middleware/userLogin');
 const userModel = db.model('user', userSchema);
 const folderModel = db.model('folder', folderSchema);
 
+const userModel = db.model('user', userSchema);
 /* GET all folder. */
 router.get('/', authenticateToken, async (req, res, next) => {
   const current_user = await userModel.findOne({ _id: req.user.userId });

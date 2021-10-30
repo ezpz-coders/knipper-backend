@@ -2,10 +2,10 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-var indexRouter = require('./routes/index')
-var usersRouter = require('./routes/users')
-var folderRouter = require('./routes/folder')
-var snippetsRouter = require('./routes/snippets')
+const indexRouter = require('./routes/index')
+const usersRouter = require('./routes/users')
+const folderRouter = require('./routes/folder')
+const snippetsRouter = require('./routes/snippets')
 
 const app = express();
 
